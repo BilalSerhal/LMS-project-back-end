@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\UserLMS;
 
 class UserController extends Controller
@@ -33,7 +34,7 @@ class UserController extends Controller
     }
 
     public function getUser(Request $request){
-        $user=UserLMS::all()->getall();
+        $user=DB::table('user_l_m_s')->get();
 
         return response()->json([
             'message'=>$user
