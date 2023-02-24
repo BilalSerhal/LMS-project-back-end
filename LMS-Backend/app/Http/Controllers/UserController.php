@@ -32,5 +32,13 @@ class UserController extends Controller
 
     }
 
+    public function getUser(Request $request){
+        $user=UserLMS::all()->getall();
 
+        return response()->json([
+            'message'=>$user
+        ]);
+
+    }
+}
    
