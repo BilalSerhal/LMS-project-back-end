@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('level-_sections', function (Blueprint $table) {
+        Schema::create('level_sections', function (Blueprint $table) {
             $table->id();
             $table->integer('capacity');
             $table->unsignedBigInteger('level-id');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('level-_sections');
+        Schema::dropIfExists('level_sections');
     }
 };

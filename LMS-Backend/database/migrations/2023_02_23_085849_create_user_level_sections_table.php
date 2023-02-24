@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user-_level-_sections', function (Blueprint $table) {
+        Schema::create('user_level_sections', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('levelSection-id');
-            $table->foreign('levelSection-id')->references('id')->on('level-_sections')->onDelete('cascade');
+            $table->foreign('levelSection-id')->references('id')->on('level_sections')->onDelete('cascade');
             
             $table->unsignedBigInteger('teacher-id');
-            $table->foreign('teacher-id')->references('id')->on('user-_l_m_s')->onDelete('cascade');
+            $table->foreign('teacher-id')->references('id')->on('user_l_m_s')->onDelete('cascade');
             
             $table->unsignedBigInteger('student-id');
-            $table->foreign('student-id')->references('id')->on('user-_l_m_s')->onDelete('cascade');
+            $table->foreign('student-id')->references('id')->on('user_l_m_s')->onDelete('cascade');
             
             $table->unsignedBigInteger('course-id');
             $table->foreign('course-id')->references('id')->on('courses')->onDelete('cascade');
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user-_level-_sections');
+        Schema::dropIfExists('user_level_sections');
     }
 };

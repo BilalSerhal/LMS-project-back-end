@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('attendaces', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('levelSectionId');
-            $table->foreign('levelSectionId')->references('id')->on('level-_sections')->onDelete('cascade');
+            $table->foreign('levelSectionId')->references('id')->on('level_sections')->onDelete('cascade');
             
             $table->unsignedBigInteger('studentId')->unique();
-            $table->foreign('studentId')->references('id')->on('user-_l_m_s')->onDelete('cascade');
-            
+            $table->foreign('studentId')->references('id')->on('user_l_m_s')->onDelete('cascade'); 
+
             $table->string('status');
             $table->date('date');
             $table->timestamps();

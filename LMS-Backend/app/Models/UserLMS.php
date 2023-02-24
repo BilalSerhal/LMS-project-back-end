@@ -9,6 +9,15 @@ class UserLMS extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'firstName',
+        'lastName',
+        'email',
+        'password',
+        'role',
+        'phoneNumber',
+    ];
+
     public function Attendance(){
         return $this->hasOne(Attendace::class);
     }
