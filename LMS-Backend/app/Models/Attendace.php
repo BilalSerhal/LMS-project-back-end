@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attendace extends Model
 {
+    protected $fillable = [
+        'levelSectionId',
+        'studentId',
+        'status',
+        'date',
+
+    ];
+
     use HasFactory;
 
     public function Student(){

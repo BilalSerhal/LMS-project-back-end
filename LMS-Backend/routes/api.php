@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AttendanceController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/userLMS/',[UserController::class,'addUser']);
 Route::get('/userLMS/',[UserController::class,'getUser']);
+Route::post('/attendance/createAttendance',[AttendanceController::class,'createAttendance']);
+Route::post('/attendance/getAttendanceReport',[AttendanceController::class,'getAttendancereport']);
+
