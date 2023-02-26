@@ -4,15 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class LevelSection extends Model
-{
-    use HasFactory;
-    public function Level(){
-        return $this->belongsToMany(Level::class);
-    }
+class LevelSection extends Pivot
+{   
+    
+    use EagerLoadPivotTrait;
 
-    public function Section(){
-        return $this->belongsToMany(Section::class);
-    }
+    protected $fillable = [
+        'capacity',
+        ];
+
+    //you only but attendance and userlevelsection relation here
+    
 }
