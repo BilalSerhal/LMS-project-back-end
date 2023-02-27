@@ -20,10 +20,17 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           'sectionName' => 'required'
-        ]);   
-
-        return Section::create($request->all());
+            'sectionName' => 'required',
+            'levelIds' => 'array', // Ensure levels IDs are provided in an array format
+            'levelIds.*' => 'exists:levels,id', // Ensure each level ID exists in the levels table
+            'capacity' => 'integer|nullable', // Add a capacity field that is optional and must be an integer
+        ]);
+    
+        $section = Section::create($request->only('sectionName')); // Create the new section using only the sectionName field from the request
+    
+        $section->levels()->attach($request->input('levelIds'), ['capacity' => $request->input('capacity')]); // Associate the sections with the new level using the attach method, with the capacity field set to the provided value
+    
+        return $section; // Return the newly created section with its associated levels
     }
 
     /**
@@ -31,7 +38,7 @@ class SectionController extends Controller
      */
     public function show(string $id)
     {
-        return Section::find($id);
+        return Section::with('levels')->find($id);
     }
 
     /**

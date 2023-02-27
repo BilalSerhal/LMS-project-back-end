@@ -16,7 +16,7 @@ class Section extends Model
     ];
     public function levels()
     {
-      return $this->belongsToMany(Level::class, 'level_sections');
+      return $this->belongsToMany(Level::class, 'level_sections', 'level_id', 'section_id');
      
     }
 
