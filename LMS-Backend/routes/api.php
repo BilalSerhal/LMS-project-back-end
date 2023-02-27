@@ -20,3 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/userLMS/',[UserController::class,'addUser']);
 Route::get('/userLMS/',[UserController::class,'getUser']);
+Route::get('/userLMS/{id}',[UserController::class,'getUserbyID']);
+Route::put('/userLMS/{id}',[UserController::class,'updateUser']);
+Route::delete('/userLMS/{id}',[UserController::class,'deleteUser']);
+Route::get('/userLMS/getUserbyName/{firstName}',[UserController::class,'getbyName']);
+Route::get('/userLMSTeacher',[UserController::class,'getTeacher']);
+Route::get('/userLMSStudent',[UserController::class,'getStudent']);
