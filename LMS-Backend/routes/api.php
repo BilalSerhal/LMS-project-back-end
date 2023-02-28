@@ -18,8 +18,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware'=>['auth:sanctum']],function(){
+    //  Route::post('/userLMS/',[UserController::class,'addUser']);
+});
+
+
+
+
 Route::post('/userLMS/',[UserController::class,'addUser']);
+Route::post('/userLMS/login',[UserController::class,'login']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    // logout route api code here
+    Route::post('/userLMS/logout',[UserController::class,'logout']);
+    });
 Route::get('/userLMS/',[UserController::class,'getUser']);
+
 Route::get('/userLMS/{id}',[UserController::class,'getUserbyID']);
 Route::put('/userLMS/{id}',[UserController::class,'updateUser']);
 Route::delete('/userLMS/{id}',[UserController::class,'deleteUser']);
