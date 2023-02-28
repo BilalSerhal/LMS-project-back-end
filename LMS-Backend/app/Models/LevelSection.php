@@ -15,4 +15,8 @@ class LevelSection extends Model
     public function Section(){
         return $this->belongsToMany(Section::class);
     }
+
+    public function Attendance(){
+        return $this->hasMany(Attendace::class, 'Level_sections_id');
+    }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('levelSectionId');
             $table->foreign('levelSectionId')->references('id')->on('level_sections')->onDelete('cascade');
             
-            $table->unsignedBigInteger('studentId')->unique();
+            $table->unsignedBigInteger('studentId');
             $table->foreign('studentId')->references('id')->on('user_l_m_s')->onDelete('cascade'); 
 
             $table->string('status');
