@@ -77,12 +77,15 @@ class UserController extends Controller
     //update user information
     public function updateUser(Request $request,$id){
         $user=UserLMS::find($id);
-        $user->firstName=$request->input('firstName');
-        $user->lastName=$request->input('lastName');
-        $user->email=$request->input('email');
-        $user->password=$request->input('password');
-        $user->role=$request->input('role');
-        $user->phoneNumber=$request->input('phoneNumber');
+        
+        $user->fill($request->only([
+            'firstName',
+            'lastName',
+            'email',
+            'password'=>Hash::make($request->password),
+            'role',
+            'phoneNumber',
+        ]));
         $user->save();
 
         
