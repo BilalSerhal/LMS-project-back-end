@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\UserLMS;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
@@ -26,7 +27,8 @@ class UserController extends Controller
         $lastName=$request->input('lastName');
         $email=$request->input('email');
         // $password=$request->input('password');
-        $password= Hash::make($request->password);
+         $password= Hash::make($request->password);
+        
         $role=$request->input('role');
         $phoneNumber=$request->input('phoneNumber');
         
@@ -52,7 +54,6 @@ class UserController extends Controller
         
         }
 
-    
 
     //get all users
     public function getUser(Request $request){
@@ -62,51 +63,75 @@ class UserController extends Controller
             'message'=>$user,
            
         ]);
+        if($user==null){
+            return response()->json([
+                'message'=>'No user exist',
+               
+            ]);
+        }
 
-    }
+        }
+
+
+
 
     public function getUserbyID(Request $request,$id){
         $user=UserLMS::find($id);
+        if(! $user){
+            return response()->json([
+                'message'=>'No user exist',
+               
+            ]);
+        }
+
 
         return response()->json([
             'message'=>$user
         ]);
 
-    }
+      
+        }
 
     //update user information
-    public function updateUser(Request $request,$id){
-        $user=UserLMS::find($id);
-        
-        $user->fill($request->only([
-            'firstName',
-            'lastName',
-            'email',
-            'password'=>Hash::make($request->password),
-            'role',
-            'phoneNumber',
-        ]));
-        $user->save();
 
-        
+    public function updateUser(Request $request, $id){
+        // log::info($request);
+    $user = UserLMS::find($id);
+    $user->firstName = $request->firstName ? $request->firstName : $user->firstName ;
+    $user->lastName = $request->lastName ? $request->lastName : $user->lastName;
+    $user->password = $request->password ? Hash::make($request->password) : $user->password;
+    $user->role = $request->role ? $request->role : $user->role;
+    $user->email = $request->email ? $request->email : $user->email;
+    $user->phoneNumber = $request->phoneNumber ? $request->phoneNumber : $user->phoneNumber;
+    $user->save();
 
-        return response()->json([
-             'message'=>'User Updated!!',
-             'user'=>$user,
-        ]);
-    }
+    
+
+    return response()->json([
+         'message' => 'User Updated!!',
+         'user' => $user,
+    ]);
+        }
+
 
     //delete user
     public function deleteUser(Request $request,$id){
         $user=UserLMS::find($id);
-        $user->delete();
+        if(! $user){
+            return response()->json([
+                'message'=>'No user exist',
+               
+            ]);
+        }
 
+        $user->delete();
+        
         return response()->json([
             'message'=>'User Deleted',
         
         ]);
 
-    }
+        }
 
 
 
@@ -115,17 +140,23 @@ class UserController extends Controller
 
     public function getbyName($firstName){
 
-        return UserLMS::where('firstName','like','%'.$firstName.'%')->get() ;
-       
+        $hi= UserLMS::where('firstName','like','%'.$firstName.'%') ;
+        if(!$hi){
+            return response()->json([
+                'message'=>'No user exist',
+               
+            ]);
+        }
+            return $hi->get();
     
-    }
+        }
 
     //get all the teachers
     public function getTeacher() {
         $role="teacher";
         $users = DB::table('user_l_m_s')->where('role', $role)->get();
         return response()->json([ 'users'=> $users]);
-   }
+        }
 
 
    //get all the students
@@ -133,14 +164,17 @@ class UserController extends Controller
     $role="student";
     $users = DB::table('user_l_m_s')->where('role', $role)->get();
     return response()->json([ 'users'=> $users]);
-}
+        }
+
 
 
 public function logout(Request $request){
     auth()->user()->tokens()->delete();
 
     return response()->json([ 'message'=> 'Logged out Successfully!!']);
-}
+        }
+
+
 
 public function login(Request $request){
     $fields=$request->validate(
@@ -167,7 +201,9 @@ public function login(Request $request){
             'message'=>'Loggedin Successfully',
             'token'=>$token,
         ]);
-}
+        }
 
-}
+    
+    
+    }
    
