@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\UserLMS;
 use App\Models\Attendance;
+use App\Models\User;
 use App\Models\UserLevelSection;
 use Carbon\Carbon;
 
@@ -37,7 +38,7 @@ class AttendanceController extends Controller
 
     }
 
-    public function getAttendancereport(Request $request){
+    public function getAttendanceReport(Request $request){
 
         $absentName = Attendance::where([
             ['status', '=', 'absent'],
@@ -50,5 +51,57 @@ class AttendanceController extends Controller
                 'ids'=>$absentName
             ]);
     }
+
+
+    public function getAttendance(){
+        $studentsSituation=DB::table('attendances')
+        ->join('user_l_m_s','attendances.studentId','=','user_l_m_s.id')
+        ->select('user_l_m_s.firstName')
+        ->where('attendances.status', '=', 'Absent')
+        ->get();
+        return response()->json([
+            'ids'=>$studentsSituation
+        ]);
+    }
+
+
+    public function getAttendanceSection(Request $request,$id){
+        $sectionSituation=DB::table('attendances')
+        ->join('user_l_m_s','attendances.studentId','=','user_l_m_s.id')
+        ->select('user_l_m_s.firstName')
+        ->where('attendances.status', '=', 'Absent')
+        ->where('attendances.levelSectionId', '=' , $id)
+        ->get();
+        return response()->json([
+            $sectionSituation
+        ]);
+    }
+
+
+    public function getAttendanceName(Request $request,$id){
+        $studentSituation=DB::table('attendances')
+        ->select('attendances.status','attendances.date')
+        ->where('attendances.studentId','=',$id)
+        ->get();
+        return response()->json([
+            $studentSituation
+        ]);
+        
+
+
+    }
+
+
+    public function getAttendanceByDate(Request $request,$id){
+        $attendaceDate=DB::table('attendances')
+        ->join('user_l_m_s','attendances.studentId','=','user_l_m_s.id')
+        ->select('user_l_m_s.firstName','attendances.status')
+        ->where('attendances.levelSectionId', '=' , $id)
+        ->get();
+        return response()->json([
+            $attendaceDate
+        ]);
+    }
+
 }
-   
+

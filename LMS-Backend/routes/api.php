@@ -23,5 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/userLMS/',[UserController::class,'addUser']);
 Route::get('/userLMS/',[UserController::class,'getUser']);
 Route::post('/attendance/createAttendance/{id}',[AttendanceController::class,'createAttendance']);
-Route::post('/attendance/getAttendanceReport',[AttendanceController::class,'getAttendancereport']);
+// Route::post('/attendance/getAttendanceReport',[AttendanceController::class,'getAttendancereport']);
+Route::get('/getReport',[AttendanceController::class,'getAttendance']);
+Route::get('/getReport/{id}',[AttendanceController::class,'getAttendanceSection']);
+Route::get('/getReportByName/{id}',[AttendanceController::class,'getAttendanceName']);
+Route::get('/getReportByDate/{id}',[AttendanceController::class,'getAttendanceByDate']);
 
