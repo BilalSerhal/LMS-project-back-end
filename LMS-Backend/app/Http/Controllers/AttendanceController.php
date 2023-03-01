@@ -38,19 +38,7 @@ class AttendanceController extends Controller
 
     }
 
-    public function getAttendanceReport(Request $request){
-
-        $absentName = Attendance::where([
-            ['status', '=', 'absent'],
-            ['levelSectionId', '=', $request->levelSectionId],
-            ])
-            ->get();
-        
-            
-            return response()->json([
-                'ids'=>$absentName
-            ]);
-    }
+    
 
 
     public function getAttendance(){
@@ -93,13 +81,24 @@ class AttendanceController extends Controller
 
 
     public function getAttendanceByDate(Request $request,$id){
-        $attendaceDate=DB::table('attendances')
+        $attendanceDate=DB::table('attendances')
         ->join('user_l_m_s','attendances.studentId','=','user_l_m_s.id')
         ->select('user_l_m_s.firstName','attendances.status')
         ->where('attendances.levelSectionId', '=' , $id)
         ->get();
         return response()->json([
-            $attendaceDate
+            $attendanceDate
+        ]);
+    }
+
+
+    public function updateAttendance(Request $request,$id){
+        $update=Attendance::find($id);
+        $update->status=$request->status ? $request->status: $update->status;
+        $update->save();
+        return response()->json([
+            'message'=>'updated',
+            'update'=>$update,
         ]);
     }
 
