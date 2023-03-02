@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -13,10 +13,15 @@ use App\Http\Controllers\UserController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('/course', [CourseController::class,'store']);
+Route::get('/course', [CourseController::class,'index']);
+Route::put('/course/{id}', [CourseController::class,'update']);
+Route::delete('/course/{id}', [CourseController::class,'destroy']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-    });
+
+
+
+ 
 
 Route::group(['middleware'=>['auth:sanctum']],function(){
     //register
@@ -29,10 +34,6 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
       Route::post('/userLMS/logout',[UserController::class,'logout']);
     });
     
-
-    
-
-
 
     
     
