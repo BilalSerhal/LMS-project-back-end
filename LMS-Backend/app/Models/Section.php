@@ -22,7 +22,7 @@ class Section extends Model
 
     public function users()
     {
-      return $this->hasMany(User::class, 'user_level_sections','level_sections', 'user_l_m_s_id', 'section_id');
+      return $this->hasMany(UserLMS::class, 'user_level_sections','level_sections', 'user_l_m_s_id', 'section_id');
      
     }   
 }
