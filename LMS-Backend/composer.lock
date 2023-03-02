@@ -5,7 +5,7 @@
         "This file is @generated automatically"
     ],
 
-    "content-hash": "827ed5b565e62f50b25b48582c17c8b
+    "content-hash": "827ed5b565e62f50b25b48582c17c8b",
     "packages": [
         {
             "name": "ajcastro/eager-load-pivot-relations",

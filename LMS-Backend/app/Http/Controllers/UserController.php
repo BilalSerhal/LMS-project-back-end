@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\UserLMS;
+
 use App\Models\UserLevelSection;
 use App\Models\Level;
 use App\Models\Section;
 use App\Models\LevelSection;
 use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
 
@@ -45,8 +47,12 @@ class UserController extends Controller
         
 
         $user->save();
+
        
     // Retrieve the level and section IDs based on their names
+      
+          // Retrieve the level and section IDs based on their names
+
     $levelName = $request->input('levelName');
     $sectionName = $request->input('sectionName');
     $level = Level::where('levelName', $levelName)->first();
@@ -71,6 +77,12 @@ class UserController extends Controller
         $token=$user->createToken('superadmintoken')->plainTextToken;
          
 
+//     $userLevelSection->save();
+//     log::info($userLevelSection->levelSection_id);
+//     log::info("$$$$$$$$$$$$$$$$$");
+   
+//    $userLevelSection->levelSection_id = $userLevelSection->levelSection_id;
+//     $userLevelSection->save();
         
         return response()->json([
             'message'=>'User created successfully!',

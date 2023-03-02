@@ -1,4 +1,6 @@
 <?php
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +15,16 @@ use App\Http\Controllers\UserController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+//Public Routes
+//Sections route
+Route::resource('sections', SectionController::class);
+//Level route
+Route::resource('levels', LevelController::class);
+
+
+Route::get('/listStudent/{levelName}/{sectionName}', [SectionController::class,'showListStudent']);
+
+
 Route::post('/course', [CourseController::class,'store']);
 Route::get('/course', [CourseController::class,'index']);
 Route::put('/course/{id}', [CourseController::class,'update']);
