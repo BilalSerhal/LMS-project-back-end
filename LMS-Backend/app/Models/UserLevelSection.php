@@ -21,17 +21,9 @@ class UserLevelSection extends Pivot
     }
 
     public function users(){
-<<<<<<< HEAD
-        return $this->belongs(UserLMS::class,'user_level_sections_id');
-=======
         return $this->belongsTo(UserLMS::class, 'user_level_sections_id');
->>>>>>> origin/dev
     }
   
 
-<<<<<<< HEAD
    
-=======
-    
->>>>>>> origin/dev
 }

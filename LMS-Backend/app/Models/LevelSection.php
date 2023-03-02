@@ -11,15 +11,6 @@ class LevelSection extends Pivot
 {   
     
     use EagerLoadPivotTrait;
-<<<<<<< HEAD
-
-    protected $fillable = [
-        'capacity',
-        ];
-
-    //you only but attendance and userlevelsection relation here
-    
-=======
 
     protected $table = 'level_sections';
 
@@ -38,5 +29,4 @@ class LevelSection extends Pivot
         return $this->hasMany(UserLevelSection::class, 'level_sections_id');
     }
 
->>>>>>> origin/dev
 }

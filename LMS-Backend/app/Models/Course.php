@@ -8,19 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-<<<<<<< HEAD
     use HasFactory;
     protected $fillable = [
         'subject',
         ];
-=======
-    use HasFactory,SoftDeletes;
-   
->>>>>>> origin/dev
-
-    protected $fillable = [
-        'subject',
-    ];
 
     public function UserLevelSection(){
         return $this->hasMany(UserLevelSection::class);
