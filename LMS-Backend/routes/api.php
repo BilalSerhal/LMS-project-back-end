@@ -27,5 +27,4 @@ Route::get('/getReport',[AttendanceController::class,'getAttendance']);
 Route::get('/getReport/{id}',[AttendanceController::class,'getAttendanceSection']);
 Route::get('/getReportByName/{id}',[AttendanceController::class,'getAttendanceName']);
 Route::get('/getReportByDate/{id}',[AttendanceController::class,'getAttendanceByDate']);
-
 Route::put('/updateAttendance/{id}',[AttendanceController::class,'updateAttendance']);
