@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 
 class UserLMS extends Model
 {
-    use EagerLoadPivotTrait;
+    use HasApiTokens, HasFactory, Notifiable, EagerLoadPivotTrait;
+
 
     protected $table = 'user_l_m_s';
 
@@ -21,6 +25,8 @@ class UserLMS extends Model
         'role',
         'phoneNumber',
     ];
+
+
 
     public function Attendance(){
         return $this->hasOne(Attendace::class);
@@ -40,4 +46,5 @@ class UserLMS extends Model
     {
         return $this->belongsToMany(Section::class, 'user_level_section', 'user_id', 'level_section_id');
     }
+
 }

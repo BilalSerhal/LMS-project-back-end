@@ -78,6 +78,7 @@ class CourseController extends Controller
      */
     public function search($subject){
         return Course::where('subject','like','%'.$subject.'%')->get();
+        
     }
 
 }

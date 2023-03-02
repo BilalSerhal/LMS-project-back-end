@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class LevelSection extends Pivot
 {   
     
-    use EagerLoadPivotTrait;
+    // use EagerLoadPivotTrait;
 
     protected $table = 'level_sections';
 
@@ -20,13 +20,20 @@ class LevelSection extends Pivot
 
 
     //you only but attendance and userlevelsection relation here
-    public function attendance()
-    {
-        return $this->hasMany(Attendance::class, 'level_sections_id');
-    }
+    // public function attendance()
+    // {
+    //     return $this->hasMany(Attendance::class, 'level_sections_id');
+    // }
     public function userLevelSection()
     {
         return $this->hasMany(UserLevelSection::class, 'level_sections_id');
     }
 
+    public function Section(){
+        return $this->belongsToMany(Section::class);
+    }
+
+    public function Attendance(){
+        return $this->hasMany(Attendance::class, 'Level_sections_id');
+    }
 }

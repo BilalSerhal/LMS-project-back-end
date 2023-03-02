@@ -48,7 +48,6 @@ class UserController extends Controller
 
         $user->save();
 
-       
     // Retrieve the level and section IDs based on their names
       
           // Retrieve the level and section IDs based on their names
@@ -84,6 +83,7 @@ class UserController extends Controller
 //    $userLevelSection->levelSection_id = $userLevelSection->levelSection_id;
 //     $userLevelSection->save();
         
+
         return response()->json([
             'message'=>'User created successfully!',
             'token'=>$token,
@@ -127,7 +127,7 @@ class UserController extends Controller
             'message'=>$user
         ]);
 
-      
+
         }
 
     //update user information
