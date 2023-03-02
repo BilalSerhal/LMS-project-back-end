@@ -51,3 +51,6 @@ Route::get('/userLMS/getUserbyName/{firstName}',[UserController::class,'getbyNam
 Route::get('/userLMSTeacher',[UserController::class,'getTeacher']);
 //get students
 Route::get('/userLMSStudent',[UserController::class,'getStudent']);
+
+/************************ */
+
