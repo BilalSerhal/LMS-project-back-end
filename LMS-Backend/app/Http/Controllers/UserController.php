@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\UserLMS;
+use App\Models\UserLevelSection;
+use App\Models\Level;
+use App\Models\Section;
+use App\Models\LevelSection;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-
+       
     //Add user
     public function addUser(Request $request){
         $user= new UserLMS;
@@ -42,14 +46,36 @@ class UserController extends Controller
 
         $user->save();
        
-        
-            $token=$user->createToken('superadmintoken')->plainTextToken;
-            
-        
+    // Retrieve the level and section IDs based on their names
+    $levelName = $request->input('levelName');
+    $sectionName = $request->input('sectionName');
+    $level = Level::where('levelName', $levelName)->first();
+    $section = Section::where('sectionName', $sectionName)->first();
+
+    // Create the user level section record
+    $userLevelSection = new UserLevelSection;
+    if ($user->role == 'student') {
+        $userLevelSection->student_id = $user->id;
+       } else if ($user->role == 'teacher') {
+        $userLevelSection->teacher_id = $user->id;
+       }
+    $userLevelSection->levelSection_id = $level->sections()->where('section_id', $section->id)->first()->id;
+
+    $user->save();
+    
+   
+   
+   $userLevelSection->levelSection_id = $userLevelSection->levelSection_id;
+    $userLevelSection->save();
+
+        $token=$user->createToken('superadmintoken')->plainTextToken;
+         
+
         
         return response()->json([
             'message'=>'User created successfully!',
             'token'=>$token,
+            'levelSection'=>$userLevelSection,
         ]);
         
         }

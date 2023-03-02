@@ -17,11 +17,9 @@ class UserLevelSection extends Model
         return $this->belongsToMany(Course::class);
     }
 
-    public function Student(){
-        return $this->belongsToMany(UserLMS::class);
+    public function users(){
+        return $this->belongs(UserLMS::class,'user_level_sections_id');
     }
 
-    public function Teacher(){
-        return $this->belongsToMany(UserLMS::class);
-    }
+   
 }

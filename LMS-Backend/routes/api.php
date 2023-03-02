@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware'=>['auth:sanctum']],function(){
     //register
-      Route::post('/userLMS/',[UserController::class,'addUser']);
+       Route::post('/userLMS/',[UserController::class,'addUser']);
       //update user
       Route::put('/userLMS/{id}',[UserController::class,'updateUser']);
       //delete user
@@ -36,7 +36,8 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
 
     
     
-
+    //register
+  //  Route::post('/userLMS/',[UserController::class,'addUser']);
 
 //login
 Route::post('/userLMS/login',[UserController::class,'login']);

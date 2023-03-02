@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('level_sections', function (Blueprint $table) {
             $table->id();
             $table->integer('capacity');
-            $table->unsignedBigInteger('level-id');
-            $table->foreign('level-id')->references('id')->on('levels')->onDelete('cascade');
-            $table->unsignedBigInteger('section-id');
-            $table->foreign('section-id')->references('id')->on('sections')->onDelete('cascade');
+            $table->unsignedBigInteger('level_id');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
+            $table->unsignedBigInteger('section_id');
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->timestamps();
         });
     }

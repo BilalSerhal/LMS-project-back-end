@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 class UserLMS extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use EagerLoadPivotTrait;
+
+    protected $table = 'user_l_m_s';
+
 
     protected $fillable = [
         'firstName',
@@ -21,17 +25,27 @@ class UserLMS extends Model
         'phoneNumber',
     ];
 
+
+
     public function Attendance(){
         return $this->hasOne(Attendace::class);
     }
 
-    public function Student(){
-        return $this->hasOne(UserLevelSection::class);
+    public function levelSections()
+    {
+        return $this->hasMany(UserLevelSection::class,'levelSection_id');
     }
 
-    public function Teacher(){
-        return $this->hasOne(UserLevelSection::class);
+    public function levels()
+    {
+        return $this->belongsToMany(Level::class, 'user_level_section', 'user_id', 'level_section_id');
     }
+
+    public function sections()
+    {
+        return $this->belongsToMany(Section::class, 'user_level_section', 'user_id', 'level_section_id');
+    }
+    
 
 
 }
