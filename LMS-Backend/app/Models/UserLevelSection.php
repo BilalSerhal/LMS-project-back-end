@@ -25,5 +25,5 @@ class UserLevelSection extends Pivot
     }
   
 
-    
+   
 }

@@ -5,20 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendace extends Model
+class Attendance extends Model
 {
     use HasFactory;
 
+    
     protected $fillable = [
         'status',
-        'date'
-        ];
+        'date',
+
+    ];
+
+
 
     public function Student(){
         return $this->belongsTo(UserLMS::class);
     }
-    public function levelSection(){
+
+    public function LevelSection()
+    {
         return $this->belongsTo(LevelSection::class);
     }
-
 }
