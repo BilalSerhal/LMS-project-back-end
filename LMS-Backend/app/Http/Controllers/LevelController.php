@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Level;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LevelController extends Controller
 {

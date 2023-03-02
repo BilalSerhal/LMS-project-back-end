@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('user_level_sections', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('levelSection-id');
-            $table->foreign('levelSection-id')->references('id')->on('level_sections')->onDelete('cascade');
+            $table->unsignedBigInteger('levelSection_id');
+            $table->foreign('levelSection_id')->references('id')->on('level_sections')->onDelete('cascade');
             
-            $table->unsignedBigInteger('teacher-id');
-            $table->foreign('teacher-id')->references('id')->on('user_l_m_s')->onDelete('cascade');
+            $table->unsignedBigInteger('teacher_id');
+            $table->foreign('teacher_id')->references('id')->on('user_l_m_s')->onDelete('cascade');
             
-            $table->unsignedBigInteger('student-id');
-            $table->foreign('student-id')->references('id')->on('user_l_m_s')->onDelete('cascade');
+            $table->unsignedBigInteger('student_id');
+            $table->foreign('student_id')->references('id')->on('user_l_m_s')->onDelete('cascade');
             
-            $table->unsignedBigInteger('course-id');
-            $table->foreign('course-id')->references('id')->on('courses')->onDelete('cascade');
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
         });
     }

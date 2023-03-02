@@ -1,27 +1,29 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 
-class UserLevelSection extends Model
+class UserLevelSection extends Pivot
 {
-    use HasFactory;
+    use EagerLoadPivotTrait;
+
+    protected $table = 'user_level_sections';
 
     public function levelSection(){
-        return $this->belongsToMany(LevelSection::class);
+        return $this->belongsTo(LevelSection::class,);
     }
 
     public function course(){
-        return $this->belongsToMany(Course::class);
+        return $this->belongsTo(Course::class);
     }
 
-    public function Student(){
-        return $this->belongsToMany(UserLMS::class);
+    public function users(){
+        return $this->belongsTo(UserLMS::class, 'user_level_sections_id');
     }
+  
 
-    public function Teacher(){
-        return $this->belongsToMany(UserLMS::class);
-    }
+    
 }

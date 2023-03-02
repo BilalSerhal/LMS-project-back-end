@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendaces', function (Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('levelSectionId');
-            $table->foreign('levelSectionId')->references('id')->on('level_sections')->onDelete('cascade');
+            $table->unsignedBigInteger('levelSection_id');
+            $table->foreign('levelSection_id')->references('id')->on('level_sections')->onDelete('cascade');
             
-            $table->unsignedBigInteger('studentId')->unique();
-            $table->foreign('studentId')->references('id')->on('user_l_m_s')->onDelete('cascade'); 
+            $table->unsignedBigInteger('student_id')->unique();
+            $table->foreign('student_id')->references('id')->on('user_l_m_s')->onDelete('cascade'); 
 
             $table->string('status');
             $table->date('date');

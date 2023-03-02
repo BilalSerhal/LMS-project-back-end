@@ -28,3 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //User route
 Route::post('/userLMS/',[UserController::class,'addUser']);
 Route::get('/userLMS/',[UserController::class,'getUser']);
+
+Route::get('/listStudent/{levelName}/{sectionName}', [SectionController::class,'showListStudent']);
+
+

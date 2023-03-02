@@ -9,7 +9,16 @@ class Attendace extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'status',
+        'date'
+        ];
+
     public function Student(){
         return $this->belongsTo(UserLMS::class);
     }
+    public function levelSection(){
+        return $this->belongsTo(LevelSection::class);
+    }
+
 }
