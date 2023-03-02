@@ -7,13 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model
 {
+    use HasFactory;
+
+    
     protected $fillable = [
         'status',
         'date',
 
     ];
 
-    use HasFactory;
+
 
     public function Student(){
         return $this->belongsTo(UserLMS::class);
