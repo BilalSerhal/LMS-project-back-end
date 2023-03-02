@@ -20,34 +20,48 @@ use App\Http\Controllers\UserController;
 Route::resource('sections', SectionController::class);
 //Level route
 Route::resource('levels', LevelController::class);
-
-
-
-//User route
-Route::post('/userLMS/',[UserController::class,'addUser']);
-Route::get('/userLMS/',[UserController::class,'getUser']);
-
 Route::get('/listStudent/{levelName}/{sectionName}', [SectionController::class,'showListStudent']);
 
-
+//course route
 Route::post('/course', [CourseController::class,'store']);
 Route::get('/course', [CourseController::class,'index']);
 Route::put('/course/{id}', [CourseController::class,'update']);
 Route::delete('/course/{id}', [CourseController::class,'destroy']);
-// Route::post('/register', [UserController::class, 'register']);
-// Route::post('/login', [UserController::class, 'login']);
-// Route::post('/logout', [UserController::class, 'logout']);
-// Route::group(['middleware' => ['jwt.user']], function() {
-//     Route::post('/logout', ['App\Http\Controllers\UserController', 'logout']);
-// });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request){
-
-    return $request->user();
-});
+//attendancd route
+Route::post('/attendance/createAttendance/{id}',[AttendanceController::class,'createAttendance']);
+Route::get('/getReport',[AttendanceController::class,'getAttendance']);
+Route::get('/getReport/{id}',[AttendanceController::class,'getAttendanceSection']);
+Route::get('/getReportByName/{id}',[AttendanceController::class,'getAttendanceName']);
+Route::get('/getReportByDate/{id}',[AttendanceController::class,'getAttendanceByDate']);
+Route::put('/updateAttendance/{id}',[AttendanceController::class,'updateAttendance']);
 
 
-Route::get('/hello', function () {
-    return view('welcome');
-});
+//user route and auth 
 
+Route::group(['middleware'=>['auth:sanctum']],function(){
+    //register
+       Route::post('/userLMS/',[UserController::class,'addUser']);
+      //update user
+      Route::put('/userLMS/{id}',[UserController::class,'updateUser']);
+      //delete user
+      Route::delete('/userLMS/{id}',[UserController::class,'deleteUser']);
+      // logout route api code here
+      Route::post('/userLMS/logout',[UserController::class,'logout']);
+    });
+    
+ //register
+  //  Route::post('/userLMS/',[UserController::class,'addUser']);
+
+//login
+Route::post('/userLMS/login',[UserController::class,'login']);
+//get all users
+Route::get('/userLMS/',[UserController::class,'getUser']);
+//get user by id
+Route::get('/userLMS/{id}',[UserController::class,'getUserbyID']);
+//search by name
+Route::get('/userLMS/getUserbyName/{firstName}',[UserController::class,'getbyName']);
+//get teachers
+Route::get('/userLMSTeacher',[UserController::class,'getTeacher']);
+//get students
+Route::get('/userLMSStudent',[UserController::class,'getStudent']);
