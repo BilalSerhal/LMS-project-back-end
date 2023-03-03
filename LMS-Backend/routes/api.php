@@ -18,6 +18,9 @@ use App\Http\Controllers\AttendanceController;
 |
 */
 //Public Routes
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+  return $request->user();
+  });
 //Sections route
 Route::resource('sections', SectionController::class);
 //Level route
@@ -32,14 +35,9 @@ Route::get('/course', [CourseController::class,'index']);
 Route::put('/course/{id}', [CourseController::class,'update']);
 Route::delete('/course/{id}', [CourseController::class,'destroy']);
 
-
-
-
- 
-
 Route::group(['middleware'=>['auth:sanctum']],function(){
     //register
-       Route::post('/userLMS/',[UserController::class,'addUser']);
+       Route::post('/userLMS',[UserController::class,'addUser']);
       //update user
       Route::put('/userLMS/{id}',[UserController::class,'updateUser']);
       //delete user
@@ -52,12 +50,12 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     
     
     //register
-  //  Route::post('/userLMS/',[UserController::class,'addUser']);
+    //  Route::post('/userLMS',[UserController::class,'addUser']);
 
 //login
 Route::post('/userLMS/login',[UserController::class,'login']);
 //get all users
-Route::get('/userLMS/',[UserController::class,'getUser']);
+Route::get('/userLMS',[UserController::class,'getUser']);
 Route::post('/attendance/createAttendance/{id}',[AttendanceController::class,'createAttendance']);
 Route::get('/getReport',[AttendanceController::class,'getAttendance']);
 Route::get('/getReport/{id}',[AttendanceController::class,'getAttendanceSection']);

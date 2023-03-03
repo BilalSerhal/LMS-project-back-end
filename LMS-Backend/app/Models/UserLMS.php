@@ -47,4 +47,9 @@ class UserLMS extends Model
         return $this->belongsToMany(Section::class, 'user_level_section', 'user_id', 'level_section_id');
     }
 
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'user_level_section', 'user_id', 'course_id');
+    }
+
 }

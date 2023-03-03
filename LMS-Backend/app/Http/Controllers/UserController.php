@@ -10,6 +10,7 @@ use App\Models\UserLMS;
 use App\Models\UserLevelSection;
 use App\Models\Level;
 use App\Models\Section;
+use App\Models\Course;
 use App\Models\LevelSection;
 use Illuminate\Support\Facades\Hash;
 
@@ -48,10 +49,7 @@ class UserController extends Controller
 
         $user->save();
 
-<<<<<<< HEAD
-            
 
-=======
        
     // Retrieve the level and section IDs based on their names
       
@@ -59,40 +57,54 @@ class UserController extends Controller
 
     $levelName = $request->input('levelName');
     $sectionName = $request->input('sectionName');
+    // $subject = $request->input('subject');
     $level = Level::where('levelName', $levelName)->first();
     $section = Section::where('sectionName', $sectionName)->first();
+    // $course=Course::where('subject',$subject)->first();
 
     // Create the user level section record
     $userLevelSection = new UserLevelSection;
     if ($user->role == 'student') {
         $userLevelSection->student_id = $user->id;
-       } else if ($user->role == 'teacher') {
-        $userLevelSection->teacher_id = $user->id;
-       }
-    $userLevelSection->levelSection_id = $level->sections()->where('section_id', $section->id)->first()->id;
 
-    $user->save();
+        $userLevelSection->levelSection_id = $level->sections()->where('section_id', $section->id)->first()->id;
+   
+    // $user->save();
     
+        $userLevelSection->levelSection_id ;
+        $userLevelSection->save();
+       } 
+       
+       
+       else if ($user->role == 'teacher') {
+        $userLevelSection->teacher_id = $user->id;
+        $subject = $request->input('subject');
+        $course=Course::where('subject',$subject)->first();
+        $userLevelSection->levelSection_id = $level->sections()->where('section_id', $section->id)->first()->id;
+       $userLevelSection->levelSection_id;
+        $userLevelSection->course_id = $course->id;
+        $userLevelSection->course_id ;
+        // $userLevelSection->save();
+        
+       $userLevelSection->save();
+       }
+    
+   $user->save();
+    
+
    
-   
-   $userLevelSection->levelSection_id = $userLevelSection->levelSection_id;
-    $userLevelSection->save();
 
         $token=$user->createToken('superadmintoken')->plainTextToken;
          
 
-//     $userLevelSection->save();
-//     log::info($userLevelSection->levelSection_id);
-//     log::info("$$$$$$$$$$$$$$$$$");
-   
-//    $userLevelSection->levelSection_id = $userLevelSection->levelSection_id;
-//     $userLevelSection->save();
+
         
->>>>>>> origin/dev
+
         return response()->json([
             'message'=>'User created successfully!',
             'token'=>$token,
             'levelSection'=>$userLevelSection,
+            
         ]);
         
         }
@@ -132,10 +144,7 @@ class UserController extends Controller
             'message'=>$user
         ]);
 
-<<<<<<< HEAD
-    }
-}
-=======
+
       
         }
 
@@ -253,5 +262,3 @@ public function login(Request $request){
     
     
     }
-   
->>>>>>> origin/dev

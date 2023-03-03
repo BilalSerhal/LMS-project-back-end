@@ -16,6 +16,12 @@ class Course extends Model
     public function UserLevelSection(){
         return $this->hasMany(UserLevelSection::class);
     }
+
+    public function users()
+    {
+      return $this->hasMany(UserLMS::class, 'user_level_sections','courses', 'user_l_m_s_id', 'courses_id');
+     
+    } 
 }
 
 
