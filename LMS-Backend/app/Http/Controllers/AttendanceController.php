@@ -38,7 +38,6 @@ class AttendanceController extends Controller
 
     }
 
-    
 
 
     public function getAttendance(){
