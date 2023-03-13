@@ -10,6 +10,7 @@ use App\Models\UserLMS;
 use App\Models\Attendance;
 use App\Models\User;
 use App\Models\UserLevelSection;
+use App\Http\Resources\AttendanceReportResource;
 use Carbon\Carbon;
 
 
@@ -40,16 +41,16 @@ class AttendanceController extends Controller
 
 
 
-    public function getAttendance(){
-        $studentsSituation=DB::table('attendances')
-        ->join('user_l_m_s','attendances.studentId','=','user_l_m_s.id')
-        ->select('user_l_m_s.firstName')
-        ->where('attendances.status', '=', 'Absent')
-        ->get();
-        return response()->json([
-            'ids'=>$studentsSituation
-        ]);
-    }
+    // public function getAttendance(){
+    //     $studentsSituation=DB::table('attendances')
+    //     ->join('user_l_m_s','attendances.studentId','=','user_l_m_s.id')
+    //     ->select('user_l_m_s.firstName')
+    //     ->where('attendances.status', '=', 'Absent')
+    //     ->get();
+    //     return response()->json([
+    //         'ids'=>$studentsSituation
+    //     ]);
+    // }
 
 
     public function getAttendanceSection(Request $request,$id){
@@ -99,6 +100,35 @@ class AttendanceController extends Controller
             'message'=>'updated',
             'update'=>$update,
         ]);
+    }
+
+    public function createOrUpdateAttendance(Request $request)
+    {
+        $studentLevelSection = UserLevelSection::where('student_id',$request->studentId)->first();
+        $level_Section_id = $studentLevelSection->levelSection_id;
+
+        Attendance::updateOrCreate([
+            'studentId' => $request->studentId
+        ], 
+        [
+            'status' => $request->status,
+            'levelSection_Id' => $level_Section_id,
+            'date' => date('Y-m-d')
+        ]);
+
+        return response()->json([
+            'message'=>'attendance created successfully!'
+        ]);
+
+
+    }
+
+    
+
+
+    public function getAttendance(){
+        $data = UserLMS::with('Attendance','Attendance.LevelSection','Attendance.LevelSection.parentSection','Attendance.LevelSection.grade')->get();
+        return response()->json(AttendanceReportResource::collection($data));
     }
 
 }
