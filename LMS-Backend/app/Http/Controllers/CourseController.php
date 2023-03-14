@@ -80,6 +80,21 @@ class CourseController extends Controller
         return Course::where('subject','like','%'.$subject.'%')->get();
         
     }
+  
+
+    /// list of student in this course
+    public function getStudentsByCourseName($subject)
+    {
+        $students = DB::table('user_l_m_s')
+                        ->join('user_level_sections', 'user_l_m_s.id', '=', 'user_level_sections.student_id')
+                        ->join('courses', 'user_level_sections.course_id', '=', 'courses.id')
+                        ->where('courses.subject', '=', $subject)
+                        ->select('user_l_m_s.*')
+                        ->get();
+    
+        return $students;
+    }
+    
 
 }
 

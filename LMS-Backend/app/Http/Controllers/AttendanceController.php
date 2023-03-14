@@ -19,12 +19,12 @@ class AttendanceController extends Controller
     
     public function createAttendance(Request $request,$id)
     {
-        $student = UserLevelSection::where('student-id',$id)->first();
+        $student = UserLevelSection::where('student_id',$id)->first();
         log::info($student);
         $level_Section_id = $student->levelSection_id;
 
         $attendance = new Attendance;
-        $attendance->levelSectionId = $level_Section_id;
+        $attendance->levelSection_id = $level_Section_id;
         $attendance->studentId = $id;
         $attendance->status = $request->status;
         $attendance->date = Carbon::now();

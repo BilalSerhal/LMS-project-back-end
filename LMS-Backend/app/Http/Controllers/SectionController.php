@@ -66,22 +66,19 @@ class SectionController extends Controller
 
     //git a list of student in certain level and section
     public function showListStudent($levelName, $sectionName)
-    {
-        $students = [];
-        $level = Level::where('levelName', $levelName)->firstOrFail();
-        
-        $section = Section::where('sectionName', $sectionName)->firstOrFail();
-        $levelSection = LevelSection::where('level_id', $level->id)->where('section_id', $section->id)->first();
-        $user_level_section = UserLevelSection::where('levelSection_id',$levelSection->id)->get();
-        foreach($user_level_section as $each){
-            $student = UserLMS::where('id',$each->student_id)->first();
-            array_push($students,$student);
-        }
+{
+    $students = DB::table('user_l_m_s')
+                    ->join('user_level_sections', 'user_l_m_s.id', '=', 'user_level_sections.student_id')
+                    ->join('level_sections', 'user_level_sections.levelSection_id', '=', 'level_sections.id')
+                    ->join('levels', 'level_sections.level_id', '=', 'levels.id')
+                    ->join('sections', 'level_sections.section_id', '=', 'sections.id')
+                    ->where('levels.levelName', '=', $levelName)
+                    ->where('sections.sectionName', '=', $sectionName)
+                    ->select('user_l_m_s.*')
+                    ->get();
 
-        
-        return response()->json($students);
-
-    }
+    return response()->json($students);
+}
     
 
 }

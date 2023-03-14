@@ -18,79 +18,68 @@ class UserController extends Controller
 
        
     //Add user
-    public function addUser(Request $request){
-        $user= new UserLMS;
+    public function addUser(Request $request)
+{
+    $user = new UserLMS;
 
-        $request->validate([
-        'firstName'=>'required',
-        'lastName'=>'required',
-        'email'=>'required|unique:users,email',
-        'password'=>'required',
-        'role'=>'required',
-        'phoneNumber'=>'required',
-      ]);
-        $firstName=$request->input('firstName');
-        $lastName=$request->input('lastName');
-        $email=$request->input('email');
-        // $password=$request->input('password');
-         $password= Hash::make($request->password);
-        
-        $role=$request->input('role');
-        $phoneNumber=$request->input('phoneNumber');
-        
-        $user->firstName=$firstName;
-        $user->lastName=$lastName;
-        $user->email=$email;
-        $user->password=$password;
-        $user->role=$role;
-        $user->phoneNumber=$phoneNumber;
-        
+    $request->validate([
+        'firstName' => 'required',
+        'lastName' => 'required',
+        'email' => 'required|unique:users,email',
+        'password' => 'required',
+        'role' => 'required',
+        'phoneNumber' => 'required',
+    ]);
 
-        $user->save();
+    $firstName = $request->input('firstName');
+    $lastName = $request->input('lastName');
+    $email = $request->input('email');
+    $password = Hash::make($request->password);
+    $role = $request->input('role');
+    $phoneNumber = $request->input('phoneNumber');
 
-    // Retrieve the level and section IDs based on their names
-      
-          // Retrieve the level and section IDs based on their names
-
-    $levelName = $request->input('levelName');
-    $sectionName = $request->input('sectionName');
-    $level = Level::where('levelName', $levelName)->first();
-    $section = Section::where('sectionName', $sectionName)->first();
-
-    // Create the user level section record
-    $userLevelSection = new UserLevelSection;
-    if ($user->role == 'student') {
-        $userLevelSection->student_id = $user->id;
-       } else if ($user->role == 'teacher') {
-        $userLevelSection->teacher_id = $user->id;
-       }
-    $userLevelSection->levelSection_id = $level->sections()->where('section_id', $section->id)->first()->id;
+    $user->firstName = $firstName;
+    $user->lastName = $lastName;
+    $user->email = $email;
+    $user->password = $password;
+    $user->role = $role;
+    $user->phoneNumber = $phoneNumber;
 
     $user->save();
-    
-   
-   
-   $userLevelSection->levelSection_id = $userLevelSection->levelSection_id;
-    $userLevelSection->save();
 
-        $token=$user->createToken('superadmintoken')->plainTextToken;
-         
+    // Create the user level section record if level and section are provided
+    if ($request->has('levelName') && $request->has('sectionName')) {
+        $levelName = $request->input('levelName');
+        $sectionName = $request->input('sectionName');
+        $level = Level::where('levelName', $levelName)->first();
+        $section = Section::where('sectionName', $sectionName)->first();
 
-//     $userLevelSection->save();
-//     log::info($userLevelSection->levelSection_id);
-//     log::info("$$$$$$$$$$$$$$$$$");
-   
-//    $userLevelSection->levelSection_id = $userLevelSection->levelSection_id;
-//     $userLevelSection->save();
-        
-
-        return response()->json([
-            'message'=>'User created successfully!',
-            'token'=>$token,
-            'levelSection'=>$userLevelSection,
-        ]);
-        
+        if ($level && $section) {
+            $userLevelSection = new UserLevelSection;
+            if ($user->role == 'student') {
+                $userLevelSection->student_id = $user->id;
+                $userLevelSection->levelSection_id = $level->sections()->where('section_id', $section->id)->first()->id;
+                $userLevelSection->save();
+            } else if ($user->role == 'teacher') {
+                $subject = $request->input('subject');
+                $course = Course::where('subject', $subject)->first();
+                if ($course) {
+                    $userLevelSection->teacher_id = $user->id;
+                    $userLevelSection->levelSection_id = $level->sections()->where('section_id', $section->id)->first()->id;
+                    $userLevelSection->course_id = $course->id;
+                    $userLevelSection->save();
+                }
+            }
         }
+    }
+
+    $token = $user->createToken('superadmintoken')->plainTextToken;
+    return response()->json([
+        'message' => 'User created successfully!',
+        'token' => $token,
+        'levelSection' => $userLevelSection ?? null,
+    ]);
+}
 
 
     //get all users
