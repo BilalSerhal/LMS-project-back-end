@@ -28,7 +28,7 @@ Route::resource('levels', LevelController::class);
 
 
 Route::get('/listStudent/{levelName}/{sectionName}', [SectionController::class,'showListStudent']);
-
+Route::get('/listTeacher/{levelName}/{sectionName}', [SectionController::class,'showListTeacher']);
 
 Route::post('/course', [CourseController::class,'store']);
 Route::get('/course', [CourseController::class,'index']);
@@ -45,13 +45,14 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
       // logout route api code here
       Route::post('/userLMS/logout',[UserController::class,'logout']);
     });
-    
-
-    
+     //register
+    //  Route::post('/userLMS',[UserController::class,'addUser']);
+    //delete
+ 
     
     //register
     //  Route::post('/userLMS',[UserController::class,'addUser']);
-
+    // Route::put('/userLMS/{id}',[UserController::class,'updateUser']);
 //login
 Route::post('/userLMS/login',[UserController::class,'login']);
 //get all users
