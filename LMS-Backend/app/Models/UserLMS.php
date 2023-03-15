@@ -29,7 +29,7 @@ class UserLMS extends Model
 
 
     public function Attendance(){
-        return $this->hasOne(Attendace::class);
+        return $this->hasOne(Attendance::class, 'studentId', 'id');
     }
 
     public function levelSections()

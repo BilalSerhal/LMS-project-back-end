@@ -58,7 +58,7 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
 Route::post('/userLMS/login',[UserController::class,'login']);
 //get all users
 Route::get('/userLMS/',[UserController::class,'getUser']);
-Route::post('/attendance/createAttendance/{id}',[AttendanceController::class,'createAttendance']);
+Route::post('/attendance/createAttendance',[AttendanceController::class,'createOrUpdateAttendance'])->name('createAttendance');
 Route::get('/getReport',[AttendanceController::class,'getAttendance']);
 Route::get('/getReport/{id}',[AttendanceController::class,'getAttendanceSection']);
 Route::get('/getReportByName/{id}',[AttendanceController::class,'getAttendanceName']);

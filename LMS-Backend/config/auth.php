@@ -35,16 +35,16 @@ return [
     |
     */
 
-    // 'guards' => [
-    //     'web' => [
-    //         'driver' => 'session',
-    //         'provider' => 'users',
-    //     ],
-    //     'user' => [
-    //         'driver' => 'jwt',
-    //         'provider' => 'users',
-    //       ],
-    // ],
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'user' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+          ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
