@@ -82,6 +82,25 @@ class SectionController extends Controller
         return response()->json($students);
 
     }
+
+    public function showListTeacher($levelName, $sectionName)
+    {
+        $teachers = [];
+        $level = Level::where('levelName', $levelName)->firstOrFail();
+        
+        $section = Section::where('sectionName', $sectionName)->firstOrFail();
+        $levelSection = LevelSection::where('level_id', $level->id)->where('section_id', $section->id)->first();
+        $user_level_section = UserLevelSection::where('levelSection_id',$levelSection->id)->get();
+        foreach($user_level_section as $each){
+            $teacher = UserLMS::where('id',$each->teacher_id)->first();
+            array_push($teachers,$teacher);
+        }
+
+        
+        return response()->json($teachers);
+
+    }
+    
     
 
 }
