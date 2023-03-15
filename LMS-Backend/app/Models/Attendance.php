@@ -11,9 +11,10 @@ class Attendance extends Model
 
     
     protected $fillable = [
+        'studentId',
+        'levelSection_id',
         'status',
         'date',
-
     ];
 
 
@@ -24,6 +25,6 @@ class Attendance extends Model
 
     public function LevelSection()
     {
-        return $this->belongsTo(LevelSection::class);
+        return $this->belongsTo(LevelSection::class, 'levelSection_id');
     }
 }

@@ -16,8 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('levelSection_id');
             $table->foreign('levelSection_id')->references('id')->on('level_sections')->onDelete('cascade');
             
+
             $table->unsignedBigInteger('studentId');
             $table->foreign('studentId')->references('id')->on('user_l_m_s')->onDelete('cascade'); 
+
+
 
             $table->string('status');
             $table->date('date');
