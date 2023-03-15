@@ -11,6 +11,7 @@ class Course extends Model
     use HasFactory;
     protected $fillable = [
         'subject',
+        'description'
         ];
 
     public function UserLevelSection(){

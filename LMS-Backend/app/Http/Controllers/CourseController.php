@@ -24,6 +24,7 @@ class CourseController extends Controller
     {
         $request->validate([
             "subject" => "required",
+            "description"=>"required",
         ]);
 
 
@@ -35,7 +36,6 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        return "zeinab";
         return Course::find($id);
     }
 
@@ -48,6 +48,7 @@ class CourseController extends Controller
         if ($course){
             $fields = $request->validate([
                 "subject" => "required",
+                "description"=>"required",
             ]);
             $course -> update($fields);
             $updatedCourse=Course::find($id);
@@ -66,7 +67,11 @@ class CourseController extends Controller
         $course=Course::find($id);
         if ($course){
             $course->delete();
-            return ['message'=>'Course have been deleted '];
+         $message= ['message'=>'Course has been deleted '];
+            $course=Course::all();
+           $response=[$message,$course];
+           return response ($response,201);
+            
 
         }
         else {
@@ -77,7 +82,7 @@ class CourseController extends Controller
      * Search for specified course from storage.
      */
     public function search($subject){
-        return Course::where('subject','like','%'.$subject.'%')->get();
+        return Course::where('subject','like','%'.$subject.'%','description','like','%'.$description.'%')->get();
         
     }
 
