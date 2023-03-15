@@ -239,8 +239,16 @@ public function login(Request $request){
             'password'=>'required'
         ]
         );
+
+
+       
+
         //check email
         $user=UserLMS::where('email',$fields['email'])->first();
+
+
+         // set the role of the user
+    
 
         //check password
     
@@ -256,6 +264,7 @@ public function login(Request $request){
         return response()->json([
             'message'=>'Loggedin Successfully',
             'token'=>$token,
+            'role' => $user->role
         ]);
         }
 

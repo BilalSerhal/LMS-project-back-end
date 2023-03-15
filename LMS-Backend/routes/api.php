@@ -36,8 +36,7 @@ Route::put('/course/{id}', [CourseController::class,'update']);
 Route::delete('/course/{id}', [CourseController::class,'destroy']);
 
 Route::group(['middleware'=>['auth:sanctum']],function(){
-    //register
-       Route::post('/userLMS',[UserController::class,'addUser']);
+
       //update user
       Route::put('/userLMS/{id}',[UserController::class,'updateUser']);
       //delete user
@@ -46,13 +45,8 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
       Route::post('/userLMS/logout',[UserController::class,'logout']);
     });
      //register
-    //  Route::post('/userLMS',[UserController::class,'addUser']);
-    //delete
- 
-    
-    //register
-    //  Route::post('/userLMS',[UserController::class,'addUser']);
-    // Route::put('/userLMS/{id}',[UserController::class,'updateUser']);
+     Route::post('/userLMS',[UserController::class,'addUser']);
+     
 //login
 Route::post('/userLMS/login',[UserController::class,'login']);
 //get all users
