@@ -8,6 +8,7 @@ use App\Models\UserLevelSection;
 use App\Models\UserLMS;
 use Illuminate\Http\Request;
 use Illuminate\support\facades\Log;
+use Illuminate\support\facades\DB;
 
 
 
@@ -34,7 +35,7 @@ class SectionController extends Controller
         ]);
     
         $section = Section::create($request->only('sectionName')); // Create the new section using only the sectionName field from the request
-        $section->levels()->attach($request->input('levelIds')[0],['capacity' => $request->input('capacity')]);// Associate the sections with the new level using the attach method, with the capacity field set to the provided value
+        $section->levels()->attach($request->input('levelIds'),['capacity' => $request->input('capacity')]);// Associate the sections with the new level using the attach method, with the capacity field set to the provided value
         return $section; // Return the newly created section with its associated levels
     }
 
@@ -82,6 +83,20 @@ class SectionController extends Controller
         return response()->json($students);
 
     }
+//     public function showListStudent($levelName, $sectionName)
+// {
+//     $students = DB::table('user_l_m_s')
+//                     ->join('user_level_sections', 'user_l_m_s.id', '=', 'user_level_sections.student_id')
+//                     ->join('level_sections', 'user_level_sections.levelSection_id', '=', 'level_sections.id')
+//                     ->join('levels', 'level_sections.level_id', '=', 'levels.id')
+//                     ->join('sections', 'level_sections.section_id', '=', 'sections.id')
+//                     ->where('levels.levelName', '=', $levelName)
+//                     ->where('sections.sectionName', '=', $sectionName)
+//                     ->select('user_l_m_s.*')
+//                     ->get();
+
+//     return response()->json($students);
+// }
 
     public function showListTeacher($levelName, $sectionName)
     {
